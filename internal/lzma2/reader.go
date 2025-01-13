@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/bodgit/sevenzip/internal"
 	"github.com/ulikunitz/xz/lzma"
 )
 
@@ -70,8 +71,9 @@ func NewReader(p []byte, _ uint64, readers []io.ReadCloser) (io.ReadCloser, erro
 		return nil, fmt.Errorf("lzma2: error creating reader: %w", err)
 	}
 
-	return &readCloser{
+	// 包装 deltaReader 为限速读取器 (例如限制为 10MB/s)
+	return internal.NewThrottledReadCloser(&readCloser{
 		c: readers[0],
 		r: lr,
-	}, nil
+	}, internal.DefaultBytesPerSecond), nil
 }

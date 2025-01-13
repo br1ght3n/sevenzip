@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
+
+	"github.com/bodgit/sevenzip/internal"
 )
 
 type readCloser struct {
@@ -64,9 +66,9 @@ func newReader(readers []io.ReadCloser, conv converter) (io.ReadCloser, error) {
 	if len(readers) != 1 {
 		return nil, errNeedOneReader
 	}
-
-	return &readCloser{
+	// 包装 deltaReader 为限速读取器 (例如限制为 10MB/s)
+	return internal.NewThrottledReadCloser(&readCloser{
 		rc:   readers[0],
 		conv: conv,
-	}, nil
+	}, 10*1024*1024), nil
 }

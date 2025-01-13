@@ -15,6 +15,7 @@ require (
 	go4.org v0.0.0-20200411211856-f5505b9728dd
 	golang.org/x/sync v0.10.0
 	golang.org/x/text v0.21.0
+	golang.org/x/time v0.5.0
 )
 
 require (

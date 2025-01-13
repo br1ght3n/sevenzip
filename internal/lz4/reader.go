@@ -7,6 +7,7 @@ import (
 	"io"
 	"sync"
 
+	"github.com/bodgit/sevenzip/internal"
 	lz4 "github.com/pierrec/lz4/v4"
 )
 
@@ -64,8 +65,9 @@ func NewReader(_ []byte, _ uint64, readers []io.ReadCloser) (io.ReadCloser, erro
 		r = lz4.NewReader(readers[0])
 	}
 
-	return &readCloser{
+	// 包装 deltaReader 为限速读取器 (例如限制为 10MB/s)
+	return internal.NewThrottledReadCloser(&readCloser{
 		c: readers[0],
 		r: r,
-	}, nil
+	}, internal.DefaultBytesPerSecond), nil
 }

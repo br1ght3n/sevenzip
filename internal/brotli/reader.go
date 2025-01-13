@@ -11,6 +11,7 @@ import (
 
 	"github.com/andybalholm/brotli"
 	"github.com/bodgit/plumbing"
+	"github.com/bodgit/sevenzip/internal"
 )
 
 type readCloser struct {
@@ -106,8 +107,10 @@ func NewReader(_ []byte, _ uint64, readers []io.ReadCloser) (io.ReadCloser, erro
 		r = brotli.NewReader(reader)
 	}
 
-	return &readCloser{
+	// 包装 deltaReader 为限速读取器 (例如限制为 10MB/s)
+	return internal.NewThrottledReadCloser(&readCloser{
 		c: readers[0],
 		r: r,
-	}, nil
+	}, 10*1024*1024), nil
+
 }

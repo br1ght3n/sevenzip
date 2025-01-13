@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/bodgit/sevenzip/internal"
 	"github.com/bodgit/sevenzip/internal/util"
 )
 
@@ -92,8 +93,9 @@ func NewReader(_ []byte, _ uint64, readers []io.ReadCloser) (io.ReadCloser, erro
 	for i := range rc.sd {
 		rc.sd[i] = bitModelTotal >> 1
 	}
+	// 包装 deltaReader 为限速读取器 (例如限制为 10MB/s)
+	return internal.NewThrottledReadCloser(rc, 10*1024*1024), nil
 
-	return rc, nil
 }
 
 func (rc *readCloser) Close() error {

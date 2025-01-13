@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"github.com/bodgit/plumbing"
+	"github.com/bodgit/sevenzip/internal"
 	"github.com/bodgit/sevenzip/internal/pool"
 	"github.com/bodgit/sevenzip/internal/util"
 	"github.com/spf13/afero"
@@ -843,4 +844,8 @@ func (d *openDir) ReadDir(count int) ([]iofs.DirEntry, error) {
 	d.offset += n
 
 	return list, nil
+}
+
+func SetDefaultBytesPerSecond(bytesPerSecond int) {
+	internal.DefaultBytesPerSecond = bytesPerSecond
 }

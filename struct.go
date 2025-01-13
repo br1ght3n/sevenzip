@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/bodgit/plumbing"
+	"github.com/bodgit/sevenzip/internal"
 	"github.com/bodgit/sevenzip/internal/util"
 )
 
@@ -149,7 +150,7 @@ func (rc *folderReadCloser) Seek(offset int64, whence int) (int64, error) {
 		return 0, errSeekEOF
 	}
 
-	if _, err := io.CopyN(io.Discard, rc, newo-int64(rc.wc.Count())); err != nil { //nolint:gosec
+	if _, err := internal.ThrottledCopyN(io.Discard, rc, newo-int64(rc.wc.Count()), internal.DefaultBytesPerSecond); err != nil {
 		return 0, fmt.Errorf("sevenzip: error seeking: %w", err)
 	}
 

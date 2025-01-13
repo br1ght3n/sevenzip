@@ -5,6 +5,7 @@ import (
 	"io"
 	"sync"
 
+	"github.com/bodgit/sevenzip/internal"
 	"github.com/bodgit/sevenzip/internal/aes7z"
 	"github.com/bodgit/sevenzip/internal/bcj2"
 	"github.com/bodgit/sevenzip/internal/bra"
@@ -36,7 +37,7 @@ func newCopyReader(_ []byte, _ uint64, readers []io.ReadCloser) (io.ReadCloser, 
 		return nil, errNeedOneReader
 	}
 	// just return the passed io.ReadCloser)
-	return readers[0], nil
+	return internal.NewThrottledReadCloser(readers[0], internal.DefaultBytesPerSecond), nil
 }
 
 //nolint:gochecknoinits
