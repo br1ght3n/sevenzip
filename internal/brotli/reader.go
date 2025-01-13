@@ -11,7 +11,7 @@ import (
 
 	"github.com/andybalholm/brotli"
 	"github.com/bodgit/plumbing"
-	"github.com/bodgit/sevenzip/internal"
+	"github.com/br1ght3n/sevenzip/internal"
 )
 
 type readCloser struct {

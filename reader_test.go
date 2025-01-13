@@ -14,8 +14,8 @@ import (
 	"testing/fstest"
 	"testing/iotest"
 
-	"github.com/bodgit/sevenzip"
-	"github.com/bodgit/sevenzip/internal/util"
+	"github.com/br1ght3n/sevenzip"
+	"github.com/br1ght3n/sevenzip/internal/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"

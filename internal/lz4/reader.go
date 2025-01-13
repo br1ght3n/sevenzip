@@ -7,7 +7,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/bodgit/sevenzip/internal"
+	"github.com/br1ght3n/sevenzip/internal"
 	lz4 "github.com/pierrec/lz4/v4"
 )
 

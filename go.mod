@@ -1,4 +1,4 @@
-module github.com/bodgit/sevenzip
+module github.com/br1ght3n/sevenzip
 
 go 1.21
 

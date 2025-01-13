@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/bodgit/sevenzip/internal"
+	"github.com/br1ght3n/sevenzip/internal"
 	"github.com/klauspost/compress/zstd"
 )
 
